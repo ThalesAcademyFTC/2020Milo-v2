@@ -55,20 +55,8 @@ public class Loki extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        robot.moveRServo(0.7); //lifts up servos initially
+        robot.moveByInches(15);
 
-        robot.holoMoveLeft(0.5); //Actually moves right
-        sleep(250);
-        robot.holoMoveLeft(0);
-
-        robot.moveForTicks(-1100);
-
-        robot.moveRServo(0);
-
-        robot.moveForTicks(2200);
-
-        robot.moveRServo(0.7);
-        robot.MSForTicks(2200);
         /*
         robot.moveRServo(0.7); //lifts up servos initially
         robot.moveForTicks(-1000);

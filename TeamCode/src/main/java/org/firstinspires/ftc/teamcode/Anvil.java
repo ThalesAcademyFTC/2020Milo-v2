@@ -45,7 +45,7 @@ public class Anvil {
 
     public DcMotor[] forward, right, left, special, unique, collect;
 
-    private double ticksPerInch = 69;
+    private double ticksPerInch = 15.26;
 
     public boolean hs = true;
 
