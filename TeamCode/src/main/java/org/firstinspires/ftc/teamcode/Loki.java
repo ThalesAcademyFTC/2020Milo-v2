@@ -55,7 +55,7 @@ public class Loki extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        robot.moveByInches(15);
+        robot.moveByInches(15); //Might be better to just use encoder ticks and telemetry to test and then run
 
         /*
         robot.moveRServo(0.7); //lifts up servos initially
