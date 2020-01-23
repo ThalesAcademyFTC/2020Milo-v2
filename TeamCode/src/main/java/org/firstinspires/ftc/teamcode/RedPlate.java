@@ -44,7 +44,7 @@ import static org.firstinspires.ftc.teamcode.Anvil.Drivetrain.EVAN;
 @Autonomous(name="RedPlate", group="Pushbot")
 //@Disabled
 
-public class Loki extends LinearOpMode {
+public class RedPlate extends LinearOpMode {
     private Anvil robot;
     private ElapsedTime runtime = new ElapsedTime();
     @Override
