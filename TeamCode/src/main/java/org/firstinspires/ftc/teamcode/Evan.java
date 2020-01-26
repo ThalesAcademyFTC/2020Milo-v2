@@ -50,9 +50,9 @@ public class Evan extends OpMode {
         if (gamepad1.x) speed = 1; //full speed
         else if (gamepad1.y) speed = 4; //quarter speed
 
-        if (gamepad1.left_trigger > 0.5) robot.skyMove(0.6
+        if (gamepad1.left_trigger > 0.5) robot.clawMove(0.6
         ); //clawmove
-        else if (gamepad1.right_trigger > 0.5) robot.skyMove(0.25); //clawmove
+        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.25); //clawmove
 
         if (gamepad1.left_bumper && !robot.touchyStatus()){
             robot.armDownSpecial(gamepad1);
