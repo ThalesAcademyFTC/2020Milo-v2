@@ -52,7 +52,7 @@ public class Evan extends OpMode {
 
         if (gamepad1.left_trigger > 0.5) robot.clawMove(0.6
         ); //clawmove
-        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.25); //clawmove
+        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.25);
 
         if (gamepad1.left_bumper && !robot.touchyStatus()){
             robot.armDownSpecial(gamepad1);
