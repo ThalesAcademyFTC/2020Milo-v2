@@ -309,26 +309,18 @@ public class RedSkystone extends LinearOpMode {
         targetsSkyStone.activate();
         //Autonomous action code goes here
         //Need to move forward slightly then left/right to find sky stone first (if not visible)
-      robot.moveForTicks(600);
-        while (opModeIsActive()) {
-            if (robot.getY(stoneTarget) < 900) {
-                while (robot.getY(stoneTarget) > 100 && opModeIsActive()) robot.holoMoveLeft(0.2);
+        //Note: start sideways, facing plate
+        robot.MSForTicks(1000); //move sideways to get closer to blocks (right)
+        //Below is block detecting and getting near block
+        //Below, might need to swap x to y, and swap positive/negative for -100
+        while (robot.getY(stoneTarget) < -100 && opModeIsActive()) robot.moveForward(-0.25);
 
-                while (robot.getY(stoneTarget) < -100 && opModeIsActive()) robot.holoMoveRight(0.2);
 
-                while (robot.getX(stoneTarget) > 100 && opModeIsActive()) {
-                    robot.moveForward(0.5);
-                    robot.collect(-0.35);
-                }
-                break;
-            }
-            else {
-                robot.MSForTicks(2000);
-                robot.MSForTicks(-2000);
-            }
-        }
-        robot.turnForTicks(800); //turns to face other side of field
-        robot.moveForTicks(6000); //moves skyblocks across field
+        //need to put line here to lower attachment
+        robot.skyMove(0.25); //drops skyarm
+        robot.moveForTicks(3000); //moves across line
+        robot.skyMove(0.6); //raises skyarm
+        //Once code above is optimized, then code for second skystone should be added
 
 
         while (!isStopRequested()) {

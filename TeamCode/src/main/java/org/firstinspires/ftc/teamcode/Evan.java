@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Evan extends OpMode {
 
     private Anvil robot;
-    double cs[] = {-0.75, 1};
+    double cs[] = {-0.4, 1};
     double ws[] = {1, 0.5};
     int swap = 0;
     boolean aSwap = false;
@@ -18,7 +18,7 @@ public class Evan extends OpMode {
     int dpady = 0;
     boolean bSwap = false;
     double ss[] = {0, 0.7};
-
+    double rSpeedSwap[] = {4,  1};
 
     @Override
     public void init() {
@@ -29,6 +29,14 @@ public class Evan extends OpMode {
     public void loop() {
         telemetry.addData("touchyBlock", robot.touchyStatus());
         telemetry.addData("armencoder", robot.armMotor.getCurrentPosition());
+        telemetry.addData("speed", (1/speed)*100 + "%");
+        /*telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
+        telemetry.addData("encoder2", robot.motor2.getCurrentPosition());
+        telemetry.addData("encoder3", robot.motor3.getCurrentPosition());
+        telemetry.addData("encoder4", robot.motor4.getCurrentPosition()); */
+        telemetry.addData("red", robot.sensorColor.red());
+        telemetry.addData("blue", robot.sensorColor.blue());
+        telemetry.addData("green", robot.sensorColor.green());
         telemetry.update();
         if (gamepad1.a && !aSwap) {
             robot.collect(cs[swap]);
@@ -43,8 +51,9 @@ public class Evan extends OpMode {
         if (gamepad1.x) speed = 1; //full speed
         else if (gamepad1.y) speed = 4; //quarter speed
 
-        if (gamepad1.left_trigger > 0.5) robot.clawMove(0.23);
-        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0);
+        if (gamepad1.left_trigger > 0.5) robot.skyMove(0.6
+        ); //clawmove
+        else if (gamepad1.right_trigger > 0.5) robot.skyMove(0.25); //clawmove
 
         if (gamepad1.left_bumper && !robot.touchyStatus()){
             robot.armDownSpecial(gamepad1);
@@ -54,12 +63,13 @@ public class Evan extends OpMode {
             robot.armMotor.setPower(0);
         }
         //Backup movements for arm
-        if (gamepad1.dpad_left && !robot.touchyStatus()) robot.armMotor.setPower(0.5);
-        else if (gamepad1.dpad_right) robot.armMotor.setPower(-0.5);
+        if (gamepad1.dpad_left && !robot.touchyStatus()) robot.armMotor.setPower(-1);
+        else if (gamepad1.dpad_right) robot.armMotor.setPower(1);
         else if (gamepad1.dpad_down) robot.downOverride(gamepad1);
 
         if (gamepad1.dpad_up && !bSwap) {
             robot.moveRServo(ss[dpady]);
+            speed = rSpeedSwap[dpady];
             bSwap = true;
         }
         else if (bSwap && !gamepad1.dpad_up){

@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorColor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
@@ -31,12 +34,13 @@ public class Anvil {
     //Define servo and motor variables
     public DcMotor motor1, motor2, motor3, motor4, cmotor1, cmotor2;
     DigitalChannel touchyBlock;
+    ColorSensor sensorColor;
     public CRServo crservo1;
-    public Servo servo1, rservo1, rservo2;
+    public Servo servo1, rservo1, rservo2, skyServo;
     public DcMotor clawMotor, armMotor;
     public OpenGLMatrix lastLocation = null;
-    int target = -1100;
-    int[] positions = {-1100, -1850, -2300, -2600, -2840};
+    int[] positions = {700, 4000, 5200};
+    int target = positions[0];
 
     //Reference to mapped servo/motor controller
     private HardwareMap hwMap;
@@ -158,8 +162,10 @@ public class Anvil {
                 armMotor = hwMap.dcMotor.get("armMotor");
                 rservo1 = hwMap.servo.get("rservo1");
                 rservo2 = hwMap.servo.get("rservo2");
+                skyServo = hwMap.servo.get("skyServo");
                 touchyBlock = hwMap.get(DigitalChannel.class, "touchyBlock");
                 touchyBlock.setMode(DigitalChannel.Mode.INPUT);
+                sensorColor = hwMap.get(com.qualcomm.robotcore.hardware.ColorSensor.class, "sensorColorDistance");
                 servo1 = hwMap.servo.get("servo1");
                 motor1.setDirection(DcMotor.Direction.FORWARD);
                 motor2.setDirection(DcMotor.Direction.REVERSE);
@@ -333,10 +339,10 @@ public class Anvil {
     public boolean touchyStatus(){ return !touchyBlock.getState(); }
 
     public void armMotorEMove(int t){
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setTargetPosition(t);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setPower(1);
-        while (armMotor.isBusy()){
+        while (armMotor.getCurrentPosition() < t - 25 || armMotor.getCurrentPosition() > t + 25){
             continue;
         }
         armMotor.setPower(0);
@@ -357,20 +363,13 @@ public class Anvil {
             target = positions[2];
             armMotorEMove(target);
         }
-        else if (target == positions[2]){
-            target = positions[3]; 
-            armMotorEMove(target);
-        } else if (target == positions[3]){
-            target = positions[4];
-            armMotorEMove(target);
-        }
     }
 
     public void armDownSpecial(Gamepad x){
         if (target == positions[0]){
             clawMove(0);
             while (!touchyStatus()) {
-                armMotor.setPower(0.5);
+                armMotor.setPower(-0.5);
                 if (x.right_bumper) break;
             }
             clawMove(0.23);
@@ -381,18 +380,12 @@ public class Anvil {
         } else if (target == positions[2]){
             target = positions[1];
             armMotorEMove(target);
-        } else if (target == positions[3]){
-            target = positions[2];
-            armMotorEMove(target);
-        } else if (target == positions[4]){
-            target = positions[3];
-            armMotorEMove(target);
         }
     }
     public void downOverride(Gamepad x){
         clawMove(0);
         while (!touchyStatus()) {
-            armMotor.setPower(0.5);
+            armMotor.setPower(-1);
             if (x.right_bumper) break;
         }
         clawMove(0.23);
@@ -400,6 +393,9 @@ public class Anvil {
     public void moveRServo(double x){
         rservo1.setPosition(x);
         rservo2.setPosition(1-x);
+    }
+    public void skyMove(double pos){
+        skyServo.setPosition(pos);
     }
     public void moveForTicks(int ticks) {
         //Blocks until the robot has gotten to the desired location.
@@ -431,7 +427,7 @@ public class Anvil {
             x.setTargetPosition(-ticks);
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        this.moveForward(0.5);
+        this.moveForward(0.25);
         while (unique[0].isBusy() && special[0].isBusy()){
             continue;
         }
@@ -454,7 +450,7 @@ public class Anvil {
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        this.moveForward(0.5);
+        this.moveForward(0.25);
         while (right[0].isBusy() && left[0].isBusy()){
         }
         for (DcMotor x : forward) {

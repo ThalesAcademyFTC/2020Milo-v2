@@ -50,24 +50,17 @@ public class BluePlate extends LinearOpMode {
         telemetry.update();
         waitForStart();
         robot.moveRServo(0.7); //lifts up servos initially
+        robot.moveForTicks(1000); //moves forward to plate
+        robot.MSForTicks(200); //moves left to center of plate to turn
+        robot.turnForTicks(1000); //turn 90 degrees (to the left)
+        robot.moveForward(200); //move forward to put plate at wall
+        robot.MSForTicks(1000); //move left to put plate at wall
+        robot.moveForward(-1);
+        while (robot.sensorColor.blue() < 200 && opModeIsActive()) {
+            continue;
+        }
+        robot.moveForward(0);
 
-        robot.holoMoveLeft(0.25);
-        sleep(250);
-        robot.holoMoveLeft(0);
-
-        robot.moveForTicks(-1100);
-        robot.moveRServo(0);
-        sleep(1000);
-        robot.moveForTicks(2200);
-        robot.moveRServo(0.7);
-        /*
-        robot.MSForTicks(-500); //move right to make room for plate turn
-        robot.turnForTicks(-1200); //turn left
-        robot.moveForward(100); //move forward
-        robot.MSForTicks(200); //move right
-        robot.moveRServo(0.7); //put grabbers up
-        robot.moveForTicks(-6000); //move back to pass middle line
-*/
 
 
 
