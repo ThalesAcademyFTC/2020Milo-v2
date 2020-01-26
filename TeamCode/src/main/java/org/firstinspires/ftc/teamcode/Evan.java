@@ -30,13 +30,12 @@ public class Evan extends OpMode {
         telemetry.addData("touchyBlock", robot.touchyStatus());
         telemetry.addData("armencoder", robot.armMotor.getCurrentPosition());
         telemetry.addData("speed", (1/speed)*100 + "%");
-        /*telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
+        telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
         telemetry.addData("encoder2", robot.motor2.getCurrentPosition());
         telemetry.addData("encoder3", robot.motor3.getCurrentPosition());
-        telemetry.addData("encoder4", robot.motor4.getCurrentPosition()); */
+        telemetry.addData("encoder4", robot.motor4.getCurrentPosition());
         telemetry.addData("red", robot.sensorColor.red());
         telemetry.addData("blue", robot.sensorColor.blue());
-        telemetry.addData("green", robot.sensorColor.green());
         telemetry.update();
         if (gamepad1.a && !aSwap) {
             robot.collect(cs[swap]);
