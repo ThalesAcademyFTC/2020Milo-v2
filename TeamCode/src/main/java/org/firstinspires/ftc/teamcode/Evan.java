@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Evan extends OpMode {
 
     private Anvil robot;
-    double cs[] = {-0.4, 1};
+    double cs[] = {-0.7, 0.5};
     double ws[] = {1, 0.5};
     int swap = 0;
     boolean aSwap = false;
@@ -29,7 +29,7 @@ public class Evan extends OpMode {
     public void loop() {
         telemetry.addData("touchyBlock", robot.touchyStatus());
         telemetry.addData("armencoder", robot.armMotor.getCurrentPosition());
-        telemetry.addData("speed", (1/speed)*100 + "%");
+        telemetry.addData("speed", (1 / speed) * 100 + "%");
         telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
         telemetry.addData("encoder2", robot.motor2.getCurrentPosition());
         telemetry.addData("encoder3", robot.motor3.getCurrentPosition());
@@ -40,12 +40,10 @@ public class Evan extends OpMode {
         if (gamepad1.a && !aSwap) {
             robot.collect(cs[swap]);
             aSwap = true;
-        }
-        else if (aSwap && !gamepad1.a){
+        } else if (aSwap && !gamepad1.a) {
             swap ^= 1;
             aSwap = false;
-        }
-        else if (gamepad1.b) robot.collect(0);
+        } else if (gamepad1.b) robot.collect(0);
 
         if (gamepad1.x) speed = 1; //full speed
         else if (gamepad1.y) speed = 4; //quarter speed
@@ -54,12 +52,17 @@ public class Evan extends OpMode {
         ); //clawmove
         else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.25);
 
-        if (gamepad1.left_bumper && !robot.touchyStatus()){
+        if (gamepad1.left_bumper && !robot.touchyStatus()) {
             robot.armDownSpecial(gamepad1);
-        } else if (gamepad1.right_bumper){
+        } else if (gamepad1.right_bumper) {
             robot.armUpSpecial();
         } else {
             robot.armMotor.setPower(0);
+        }
+        if (gamepad2.a) {
+            robot.skyMove(0.25);
+        } else if (gamepad2.b) {
+            robot.skyMove(0.6);
         }
         //Backup movements for arm
         if (gamepad1.dpad_left && !robot.touchyStatus()) robot.armMotor.setPower(-1);
@@ -70,12 +73,12 @@ public class Evan extends OpMode {
             robot.moveRServo(ss[dpady]);
             speed = rSpeedSwap[dpady];
             bSwap = true;
-        }
-        else if (bSwap && !gamepad1.dpad_up){
+        } else if (bSwap && !gamepad1.dpad_up) {
             dpady ^= 1;
             bSwap = false;
         }
-        if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0) {
+        if (gamepad1.atRest()) robot.rest();
+        else {
             if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 1.3) {
                 robot.moveDiagonal(-gamepad1.left_stick_x, -gamepad1.left_stick_y, speed);
             } else if (Math.abs(gamepad1.left_stick_x) > Math.abs(gamepad1.left_stick_y)) {
