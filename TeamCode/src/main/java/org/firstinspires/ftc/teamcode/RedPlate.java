@@ -54,16 +54,24 @@ public class RedPlate extends LinearOpMode {
         runtime.reset();
         telemetry.update();
         waitForStart();
+        robot.moveRServo(0.7); //raises servos initially
+        robot.moveForTicks(-300); //moves forward to get off wall
+        robot.MSForTicks(600); //moves right to
+        robot.moveForTicks(-1650); //moves backwards to plate
+        robot.moveRServo(0); //lowers plate servos
+        //Moving robot forwards to get plate out of way of other plate
+        sleep(500);
 
-        robot.moveRServo(0.7); //lifts up servos initially
-        robot.moveForTicks(1000); //moves forward to plate
-        robot.MSForTicks(-200); //moves right to center of plate to turn
-        robot.turnForTicks(1000); //turn 90 degrees (to the left)
-        robot.moveForward(200); //move forward to put plate at wall
-        robot.MSForTicks(-1000); //move right to put plate at wall
-        robot.moveForward(-200);
-        robot.moveForward(-1);
-        while (robot.sensorColor.red() < 200 && opModeIsActive()) {
+        robot.moveForTicks(1000);
+        robot.MSForTicks(-700);
+
+        robot.turnForTicks(-1700);  //turn 90 degrees (to the left)
+        robot.moveForTicks(-400);
+        robot.moveRServo(0.7);
+        sleep(500);
+        robot.MSForTicks(400);
+        robot.moveForward(-0.25);
+        while (robot.sensorColor.red() < 30 && opModeIsActive()) {
             continue;
         }
         robot.moveForward(0);

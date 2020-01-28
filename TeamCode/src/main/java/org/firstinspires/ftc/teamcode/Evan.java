@@ -48,9 +48,9 @@ public class Evan extends OpMode {
         if (gamepad1.x) speed = 1; //full speed
         else if (gamepad1.y) speed = 4; //quarter speed
 
-        if (gamepad1.left_trigger > 0.5) robot.clawMove(0.6
-        ); //clawmove
-        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.25);
+        if (gamepad1.left_trigger > 0.5) robot.clawMove(0
+        );
+        else if (gamepad1.right_trigger > 0.5) robot.clawMove(0.23);
 
         if (gamepad1.left_bumper && !robot.touchyStatus()) {
             robot.armDownSpecial(gamepad1);
@@ -82,10 +82,10 @@ public class Evan extends OpMode {
             if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 1.3) {
                 robot.moveDiagonal(-gamepad1.left_stick_x, -gamepad1.left_stick_y, speed);
             } else if (Math.abs(gamepad1.left_stick_x) > Math.abs(gamepad1.left_stick_y)) {
-                robot.holoMoveRight(gamepad1.left_stick_x / speed);
+                robot.holoMoveLeft(gamepad1.left_stick_x / speed);
             } else if (Math.abs(gamepad1.right_stick_x) > Math.abs(gamepad1.right_stick_y)) {
-                robot.turnRight(gamepad1.right_stick_x / speed);
-            } else robot.moveForward(gamepad1.left_stick_y);
+                robot.turnLeft(gamepad1.right_stick_x / speed);
+            } else robot.moveForward(gamepad1.left_stick_y/speed);
         }
     }
 }

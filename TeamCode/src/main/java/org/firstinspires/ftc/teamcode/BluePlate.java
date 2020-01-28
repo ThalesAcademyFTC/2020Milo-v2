@@ -56,7 +56,7 @@ public class BluePlate extends LinearOpMode {
         robot.moveForward(200); //move forward to put plate at wall
         robot.MSForTicks(1000); //move left to put plate at wall
         robot.moveForward(-1);
-        while (robot.sensorColor.blue() < 200 && opModeIsActive()) {
+        while (robot.sensorColor.blue() < 25 && opModeIsActive()) {
             continue;
         }
         robot.moveForward(0);

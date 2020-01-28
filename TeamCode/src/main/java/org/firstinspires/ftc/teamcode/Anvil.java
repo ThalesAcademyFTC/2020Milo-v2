@@ -39,7 +39,7 @@ public class Anvil {
     public Servo servo1, rservo1, rservo2, skyServo;
     public DcMotor clawMotor, armMotor;
     public OpenGLMatrix lastLocation = null;
-    int[] positions = {700, 4000, 5200};
+    int[] positions = {650, 4000, 5200};
     int target = positions[0];
 
     //Reference to mapped servo/motor controller
@@ -394,7 +394,7 @@ public class Anvil {
         rservo1.setPosition(x);
         rservo2.setPosition(1-x);
     }
-    public void skyMove(double pos){
+    public void skyMove(double  pos){
         skyServo.setPosition(pos);
     }
     public void moveForTicks(int ticks) {
