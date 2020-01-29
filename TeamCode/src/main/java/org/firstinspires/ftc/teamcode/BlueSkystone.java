@@ -310,7 +310,7 @@ public class BlueSkystone extends LinearOpMode {
 
 
         //need to put line here to lower attachment
-        robot.skyMove(0.25); //drops skyarm
+        robot.skyMove(0.2); //drops skyarm
         robot.moveForTicks(3000); //moves across line
         robot.skyMove(0.6); //raises skyarm
         //Once code above is optimized, then code for second skystone should be added

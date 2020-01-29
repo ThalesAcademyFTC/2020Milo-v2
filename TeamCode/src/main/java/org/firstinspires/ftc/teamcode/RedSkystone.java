@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -310,24 +311,28 @@ public class RedSkystone extends LinearOpMode {
         //Autonomous action code goes here
         //Need to move forward slightly then left/right to find sky stone first (if not visible)
         //Note: start sideways, facing plate
+
         robot.MSForTicks(1000); //move sideways to get closer to blocks (right)
         //Below is block detecting and getting near block
         //Below, might need to swap x to y, and swap positive/negative for -100
-        while (robot.getY(stoneTarget) < -100 && opModeIsActive()) robot.moveForward(-0.25);
-
+        robot.moveForward(0.25);
+        while ((robot.getY(stoneTarget) < 95 || robot.getY(stoneTarget) > 150) && opModeIsActive()){
+            telemetry.addData("x", robot.getX(stoneTarget));
+            telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
+            telemetry.addData("y", robot.getY(stoneTarget));
+            telemetry.update();
+        }
+        robot.moveForward(0);
+        robot.MSForTicks(300);
 
         //need to put line here to lower attachment
-        robot.skyMove(0.25); //drops skyarm
+        robot.skyMove(0.2); //drops skyarm
         robot.moveForTicks(3000); //moves across line
         robot.skyMove(0.6); //raises skyarm
         //Once code above is optimized, then code for second skystone should be added
 
 
         while (!isStopRequested()) {
-            telemetry.addData("x", robot.getX(stoneTarget));
-            telemetry.addData("y", robot.getY(stoneTarget));
-            telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
-            telemetry.update();
         }
 
         // Disable Tracking when we are done;

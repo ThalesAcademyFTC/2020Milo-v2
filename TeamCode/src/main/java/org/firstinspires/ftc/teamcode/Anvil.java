@@ -39,7 +39,7 @@ public class Anvil {
     public Servo servo1, rservo1, rservo2, skyServo;
     public DcMotor clawMotor, armMotor;
     public OpenGLMatrix lastLocation = null;
-    int[] positions = {650, 4000, 5200};
+    int[] positions = {650, 4600, 5200};
     int target = positions[0];
 
     //Reference to mapped servo/motor controller

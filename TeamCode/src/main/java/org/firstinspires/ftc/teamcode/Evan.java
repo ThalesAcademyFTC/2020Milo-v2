@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Evan extends OpMode {
 
     private Anvil robot;
-    double cs[] = {-0.7, 0.5};
+    double cs[] = {0.7, -0.5};
     double ws[] = {1, 0.5};
     int swap = 0;
     boolean aSwap = false;
-    double speed = 1;
+    double speed = 10/9;
 
     int dpady = 0;
     boolean bSwap = false;
@@ -30,10 +30,6 @@ public class Evan extends OpMode {
         telemetry.addData("touchyBlock", robot.touchyStatus());
         telemetry.addData("armencoder", robot.armMotor.getCurrentPosition());
         telemetry.addData("speed", (1 / speed) * 100 + "%");
-        telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
-        telemetry.addData("encoder2", robot.motor2.getCurrentPosition());
-        telemetry.addData("encoder3", robot.motor3.getCurrentPosition());
-        telemetry.addData("encoder4", robot.motor4.getCurrentPosition());
         telemetry.addData("red", robot.sensorColor.red());
         telemetry.addData("blue", robot.sensorColor.blue());
         telemetry.update();
@@ -60,7 +56,7 @@ public class Evan extends OpMode {
             robot.armMotor.setPower(0);
         }
         if (gamepad2.a) {
-            robot.skyMove(0.25);
+            robot.skyMove(0.2);
         } else if (gamepad2.b) {
             robot.skyMove(0.6);
         }
@@ -80,7 +76,7 @@ public class Evan extends OpMode {
         if (gamepad1.atRest()) robot.rest();
         else {
             if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 1.3) {
-                robot.moveDiagonal(-gamepad1.left_stick_x, -gamepad1.left_stick_y, speed);
+                robot.moveDiagonal(gamepad1.left_stick_x, gamepad1.left_stick_y, speed);
             } else if (Math.abs(gamepad1.left_stick_x) > Math.abs(gamepad1.left_stick_y)) {
                 robot.holoMoveLeft(gamepad1.left_stick_x / speed);
             } else if (Math.abs(gamepad1.right_stick_x) > Math.abs(gamepad1.right_stick_y)) {
