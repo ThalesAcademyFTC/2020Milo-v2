@@ -315,14 +315,11 @@ public class RedSkystone extends LinearOpMode {
         robot.MSForTicks(1000); //move sideways to get closer to blocks (right)
         //Below is block detecting and getting near block
         //Below, might need to swap x to y, and swap positive/negative for -100
-        robot.moveForward(0.25);
-        while ((robot.getY(stoneTarget) < 95 || robot.getY(stoneTarget) > 150) && opModeIsActive()){
-            telemetry.addData("x", robot.getX(stoneTarget));
-            telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
-            telemetry.addData("y", robot.getY(stoneTarget));
-            telemetry.update();
+        while ((robot.getY(stoneTarget) < 95 || robot.getY(stoneTarget) > 150) && opModeIsActive()) {
+            robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
+            sleep(250); //wait in order to allow time for tracking, may need to increase
         }
-        robot.moveForward(0);
+        //block detected, need to evaluate how to collect
         robot.MSForTicks(300);
 
         //need to put line here to lower attachment
