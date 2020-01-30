@@ -305,6 +305,7 @@ public class RedSkystone extends LinearOpMode {
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
+        int x = 0;
 
         waitForStart();
         targetsSkyStone.activate();
@@ -316,8 +317,13 @@ public class RedSkystone extends LinearOpMode {
         //Below is block detecting and getting near block
         //Below, might need to swap x to y, and swap positive/negative for -100
         while ((robot.getY(stoneTarget) < 95 || robot.getY(stoneTarget) > 150) && opModeIsActive()) {
-            robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
-            sleep(250); //wait in order to allow time for tracking, may need to increase
+
+            if (x > 99) {
+                robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
+                sleep(250); //wait in order to allow time for tracking, may need to increase
+                x = 0;
+            }
+            x++;
         }
         //block detected, need to evaluate how to collect
         robot.MSForTicks(300);
