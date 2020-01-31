@@ -342,7 +342,7 @@ public class RedSkystone extends LinearOpMode {
         sleep(750);
         robot.MSForTicks(-1000);
         robot.moveForward(-0.5);
-        while (robot.sensorColor.red() < 30){
+        while (robot.sensorColor.red() < 50){
             continue;
         }
         robot.moveForward(0);

@@ -71,7 +71,7 @@ public class RedPlate extends LinearOpMode {
         sleep(500);
         robot.MSForTicks(950);
         robot.moveForward(-0.25);
-        while (robot.sensorColor.red() < 30 && opModeIsActive()) {
+        while (robot.sensorColor.red() < 50 && opModeIsActive()) {
             continue;
         }
         robot.moveForward(0);

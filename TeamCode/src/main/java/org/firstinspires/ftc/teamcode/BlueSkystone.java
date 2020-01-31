@@ -299,21 +299,46 @@ public class BlueSkystone extends LinearOpMode {
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
-
+        int x = 0;
         waitForStart();
         targetsSkyStone.activate();
         //Note: start sideways, facing plate
-      robot.MSForTicks(-1000); //move sideways to get closer to blocks (right)
+        robot.MSForTicks(-1000); //move sideways to get closer to blocks (right)
         //Below is block detecting and getting near block
-                //Below, might need to swap x to y, and swap positive/negative for -100
-        while (robot.getY(stoneTarget) < -100 && opModeIsActive()) robot.moveForward(-0.25);
+        //Below, might need to swap x to y, and swap positive/negat ive for -100
+        while ( (robot.getY(stoneTarget) < -200 || robot.getY(stoneTarget) > 200) && !isStopRequested() && opModeIsActive()) {
+            telemetry.addData("x", robot.getX(stoneTarget));
+            telemetry.addData("y", robot.getY(stoneTarget));
+            telemetry.update();
+            if (x < 1){
+                robot.moveForTicks(350);
+                sleep(500);
+                if (robot.getY(stoneTarget) > -200 && robot.getY(stoneTarget) < 200){
+                    break;
+                }
+            }
 
+            if (x > 100) {
+                robot.moveForTicks(500); //move backwards to new tracking position, may need to change number
+                sleep(500); //wait in order to allow time for tracking, may need to increase
+                x = 1;
+            }
+            x++;
+        }
+        robot.MSForTicks(1200);
 
         //need to put line here to lower attachment
         robot.skyMove(0.2); //drops skyarm
-        robot.moveForTicks(3000); //moves across line
+        sleep(750);
+        robot.MSForTicks(-1000);
+        robot.moveForward(-0.5);
+        while (robot.sensorColor.blue() < 30){
+            continue;
+        }
+        robot.moveForward(0);
+        robot.moveForTicks(500);
         robot.skyMove(0.6); //raises skyarm
-        //Once code above is optimized, then code for second skystone should be added
+        robot.moveForTicks(-500);
 
         while (!isStopRequested()) {
             telemetry.addData("x", robot.getX(stoneTarget));
