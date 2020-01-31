@@ -350,6 +350,7 @@ public class Anvil {
     }
 
     public void armUpSpecial(){
+        moveForward(0);
         if (touchyStatus()){
             armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             target = positions[0];
@@ -366,6 +367,7 @@ public class Anvil {
     }
 
     public void armDownSpecial(Gamepad x){
+        moveForward(0);
         if (target == positions[0]){
             clawMove(0);
             while (!touchyStatus()) {
@@ -383,12 +385,30 @@ public class Anvil {
         }
     }
     public void downOverride(Gamepad x){
+        moveForward(0);
         clawMove(0);
         while (!touchyStatus()) {
             armMotor.setPower(-1);
             if (x.right_bumper) break;
         }
         clawMove(0.23);
+    }
+    public void moveFastForTicks(int ticks){
+        //Blocks until the robot has gotten to the desired location.
+        this.rest();
+        for (DcMotor x : forward) {
+            x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            x.setTargetPosition(-ticks);
+            x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        this.moveForward(0.9);
+        while (forward[0].isBusy()) {
+            continue;
+        }
+        for (DcMotor x : forward) {
+            x.setPower(0);
+            x.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
     public void moveRServo(double x){
         rservo1.setPosition(x);

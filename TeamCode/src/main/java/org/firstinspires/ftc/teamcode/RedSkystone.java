@@ -315,54 +315,40 @@ public class RedSkystone extends LinearOpMode {
 
         robot.MSForTicks(1000); //move sideways to get closer to blocks (right)
         //Below is block detecting and getting near block
-        //Below, might need to swap x to y, and swap positive/negative for -100
-        while ((robot.getY(stoneTarget) < -100 || robot.getY(stoneTarget) > 100) && opModeIsActive()) {
+        //Below, might need to swap x to y, and swap positive/negat ive for -100
+        while ( (robot.getY(stoneTarget) < -250 || robot.getY(stoneTarget) > 250) && !isStopRequested() && opModeIsActive()) {
             telemetry.addData("x", robot.getX(stoneTarget));
             telemetry.addData("y", robot.getY(stoneTarget));
             telemetry.update();
             if (x > 100) {
-                robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
+                robot.moveForTicks(-350); //move backwards to new tracking position, may need to change number
                 sleep(500); //wait in order to allow time for tracking, may need to increase
                 x = 0;
             }
             x++;
         }
-        //block detected, need to evaluate how to collect
-        robot.MSForTicks(1000);
+        robot.MSForTicks(1200);
 
         //need to put line here to lower attachment
         robot.skyMove(0.2); //drops skyarm
         sleep(750);
-        robot.MSForTicks(-500);
+        robot.MSForTicks(-1000);
         robot.moveForward(-0.5);
         while (robot.sensorColor.red() < 30){
             continue;
         }
         robot.moveForward(0);
-        robot.moveForTicks(400);
+        robot.moveForTicks(500);
         robot.skyMove(0.6); //raises skyarm
-        targetsSkyStone.deactivate();
-        //code for second skystone
-        robot.moveForTicks(-3000);
-        targetsSkyStone.activate();
-        while ((robot.getY(stoneTarget) < 0 || robot.getY(stoneTarget) > 150) && opModeIsActive()) {
-            telemetry.addData("x", robot.getX(stoneTarget));
-            telemetry.addData("y", robot.getY(stoneTarget));
-            telemetry.update();
-            if (x > 100) {
-                robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
-                sleep(500); //wait in order to allow time for tracking, may need to increase
-                x = 0;
-            }
-            x++;
-        }
-        //block detected, need to evaluate how to collect
-        robot.MSForTicks(1000);
+
+        //code for random stone
+        robot.moveFastForTicks(-4000);
+        robot.MSForTicks(1100);
 
         //need to put line here to lower attachment
         robot.skyMove(0.2); //drops skyarm
         sleep(750);
-        robot.MSForTicks(-500);
+        robot.MSForTicks(-1000);
         robot.moveForward(-0.5);
         while (robot.sensorColor.red() < 30){
             continue;
