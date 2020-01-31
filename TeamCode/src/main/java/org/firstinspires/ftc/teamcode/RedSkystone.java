@@ -320,11 +320,18 @@ public class RedSkystone extends LinearOpMode {
             telemetry.addData("x", robot.getX(stoneTarget));
             telemetry.addData("y", robot.getY(stoneTarget));
             telemetry.update();
+            if (x < 1){
+                robot.moveForTicks(-350);
+                sleep(500);
+                if (robot.getY(stoneTarget) > -200 && robot.getY(stoneTarget) < 200){
+                    break;
+                }
+            }
+
             if (x > 100) {
-                robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
+                robot.moveForTicks(-500); //move backwards to new tracking position, may need to change number
                 sleep(500); //wait in order to allow time for tracking, may need to increase
-                x = 0;
-                y++;
+                x = 1;
             }
             x++;
         }
