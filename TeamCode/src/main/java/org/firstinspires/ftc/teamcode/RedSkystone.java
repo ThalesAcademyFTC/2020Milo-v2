@@ -306,7 +306,7 @@ public class RedSkystone extends LinearOpMode {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
         int x = 0;
-
+        int y = 0;
         waitForStart();
         targetsSkyStone.activate();
         //Autonomous action code goes here
@@ -324,6 +324,7 @@ public class RedSkystone extends LinearOpMode {
                 robot.moveForTicks(-300); //move backwards to new tracking position, may need to change number
                 sleep(500); //wait in order to allow time for tracking, may need to increase
                 x = 0;
+                y++;
             }
             x++;
         }
