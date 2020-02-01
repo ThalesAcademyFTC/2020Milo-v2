@@ -471,7 +471,7 @@ public class Anvil {
         }
 
         this.moveForward(0.25);
-        while (right[0].isBusy() && left[0].isBusy()){
+        while (right[0].getCurrentPosition() < ticks - 25 || right[0].getCurrentPosition() > ticks + 25  && left[0].getCurrentPosition() < ticks - 25 || left[0].getCurrentPosition() > ticks + 25){
         }
         for (DcMotor x : forward) {
             x.setPower(0);

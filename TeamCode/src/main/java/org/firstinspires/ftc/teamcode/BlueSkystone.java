@@ -325,20 +325,20 @@ public class BlueSkystone extends LinearOpMode {
             }
             x++;
         }
-        robot.MSForTicks(1200);
+        robot.MSForTicks(-1200);
 
         //need to put line here to lower attachment
         robot.skyMove(0.2); //drops skyarm
         sleep(750);
-        robot.MSForTicks(-1000);
-        robot.moveForward(-0.5);
+        robot.MSForTicks(1000);
+        robot.moveForward(0.5);
         while (robot.sensorColor.blue() < 30){
             continue;
         }
         robot.moveForward(0);
-        robot.moveForTicks(500);
-        robot.skyMove(0.6); //raises skyarm
         robot.moveForTicks(-500);
+        robot.skyMove(0.6); //raises skyarm
+        robot.moveForTicks(500);
 
         while (!isStopRequested()) {
             telemetry.addData("x", robot.getX(stoneTarget));

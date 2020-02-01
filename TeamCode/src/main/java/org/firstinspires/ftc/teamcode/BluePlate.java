@@ -51,7 +51,7 @@ public class BluePlate extends LinearOpMode {
         waitForStart();
         robot.moveRServo(0.7); //raises servos initially
         robot.moveForTicks(-300); //moves forward to get off wall
-        robot.MSForTicks(600); //moves left to
+        robot.MSForTicks(-600); //moves left to
         robot.moveForTicks(-1650); //moves backwards to plate
         robot.moveRServo(0); //lowers plate servos
         //Moving robot forwards to get plate out of way of other plate
@@ -64,9 +64,9 @@ public class BluePlate extends LinearOpMode {
         robot.moveForTicks(-400);
         robot.moveRServo(0.7);
         sleep(500);
-        robot.MSForTicks(-950);
+        robot.MSForTicks(-1200);
         robot.moveForward(-0.25);
-        while (robot.sensorColor.red() < 30 && opModeIsActive()) {
+        while (robot.sensorColor.blue() <  30 && opModeIsActive()) {
             continue;
         }
         robot.moveForward(0);
