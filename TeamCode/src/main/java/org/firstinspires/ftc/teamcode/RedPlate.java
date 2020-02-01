@@ -66,7 +66,7 @@ public class RedPlate extends LinearOpMode {
         robot.MSForTicks(-700);
 
         robot.turnForTicks(-1700);  //turn 90 degrees (to the left)
-        robot.moveForTicks(-400);
+        //robot.moveForTicks(-400);
         robot.moveRServo(0.7);
         sleep(500);
         robot.MSForTicks(1200);

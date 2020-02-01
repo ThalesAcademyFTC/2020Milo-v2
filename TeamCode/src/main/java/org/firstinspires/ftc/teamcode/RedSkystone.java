@@ -345,7 +345,7 @@ public class RedSkystone extends LinearOpMode {
         robot.skyMove(0.2); //drops skyarm
         sleep(750);
         robot.MSForTicks(-1000);
-        robot.turnForTicks(-125);
+        robot.turnForTicks(-75);
         if (y < 2) {
             if (y == 0) {
                 robot.moveFastForTicks(2600); //move across line
@@ -355,7 +355,7 @@ public class RedSkystone extends LinearOpMode {
                 robot.skyMove(0.2); //drops skyarm
                 sleep(750);
                 robot.MSForTicks(-1200);
-                robot.turnForTicks(-125);
+                //robot.turnForTicks(-75);
                 robot.moveFastForTicks(3900);
             } else if (y == 1) {
                 robot.moveFastForTicks(3000); //move across line
@@ -365,7 +365,7 @@ public class RedSkystone extends LinearOpMode {
                 robot.skyMove(0.2); //drops skyarm
                 sleep(750);
                 robot.MSForTicks(-1200);
-                robot.turnForTicks(-125);
+                //robot.turnForTicks(-75);
                 robot.moveFastForTicks(4500);
             }
         } else {
@@ -378,6 +378,7 @@ public class RedSkystone extends LinearOpMode {
             continue;
         }
         robot.moveForward(0);
+
         while (!isStopRequested()) {
         }
 
