@@ -300,13 +300,13 @@ public class BlueSkystone extends LinearOpMode {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
         int x = 0;
+        int y = 0;
         waitForStart();
         targetsSkyStone.activate();
-        //Note: start sideways, facing plate
-        robot.MSForTicks(-1000); //move sideways to get closer to blocks (right)
+        robot.MSForTicks(1200); //move sideways to get closer to blocks (right)
         //Below is block detecting and getting near block
         //Below, might need to swap x to y, and swap positive/negat ive for -100
-        while ( (robot.getY(stoneTarget) < -200 || robot.getY(stoneTarget) > 200) && !isStopRequested() && opModeIsActive()) {
+        while ( (robot.getY(stoneTarget) < -100 || robot.getY(stoneTarget) > 100) && !isStopRequested() && opModeIsActive()) {
             telemetry.addData("x", robot.getX(stoneTarget));
             telemetry.addData("y", robot.getY(stoneTarget));
             telemetry.update();
@@ -321,30 +321,56 @@ public class BlueSkystone extends LinearOpMode {
             if (x > 100) {
                 robot.moveForTicks(500); //move backwards to new tracking position, may need to change number
                 sleep(500); //wait in order to allow time for tracking, may need to increase
+                y += 1;
+                if (robot.getY(stoneTarget) > -200 && robot.getY(stoneTarget) < 200){
+                    break;
+                }
                 x = 1;
             }
             x++;
         }
-        robot.MSForTicks(-1200);
+        robot.MSForTicks(1000);
 
         //need to put line here to lower attachment
         robot.skyMove(0.2); //drops skyarm
         sleep(750);
-        robot.MSForTicks(1000);
-        robot.moveForward(0.5);
+        robot.MSForTicks(-1000);
+        robot.turnForTicks(125);
+        if (y < 2) {
+            if (y == 0) {
+                robot.moveFastForTicks(-2600); //move across line
+                robot.skyMove(0.6); //raises skyarm
+                robot.turnForTicks(125);
+                robot.moveFastForTicks(4150);
+                robot.MSForTicks(1100);
+                robot.skyMove(0.2); //drops skyarm
+                sleep(750);
+                robot.MSForTicks(-1200);
+                robot.turnForTicks(125);
+                robot.moveFastForTicks(-3900);
+            } else if (y == 1) {
+                robot.moveFastForTicks(-3000); //move across line
+                robot.skyMove(0.6); //raises skyarm
+                robot.moveFastForTicks(4700);
+                robot.MSForTicks(1100);
+                robot.skyMove(0.2); //drops skyarm
+                sleep(750);
+                robot.MSForTicks(-1200);
+                robot.turnForTicks(125);
+                robot.moveFastForTicks(-4500);
+            }
+        } else {
+            robot.moveFastForTicks(-3600); //move across line
+        }
+        robot.skyMove(0.6); //raises skyarm
+        sleep(500);
+        robot.moveForward(-0.5);
         while (robot.sensorColor.blue() < 30){
             continue;
         }
         robot.moveForward(0);
-        robot.moveForTicks(-500);
-        robot.skyMove(0.6); //raises skyarm
-        robot.moveForTicks(500);
 
         while (!isStopRequested()) {
-            telemetry.addData("x", robot.getX(stoneTarget));
-            telemetry.addData("y", robot.getY(stoneTarget));
-            telemetry.addData("encoder1", robot.motor1.getCurrentPosition());
-            telemetry.update();
         }
 
         // Disable Tracking when we are done;

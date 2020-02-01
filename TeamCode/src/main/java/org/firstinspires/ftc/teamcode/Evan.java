@@ -84,6 +84,11 @@ public class Evan extends OpMode {
             } else robot.moveForward(gamepad1.left_stick_y/speed);
         }
     }
+    @Override
+    public void stop(){
+
+    }
+
 }
 
 //dillon was here

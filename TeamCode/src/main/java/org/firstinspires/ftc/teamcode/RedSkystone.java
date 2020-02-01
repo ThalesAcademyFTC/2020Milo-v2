@@ -313,7 +313,7 @@ public class RedSkystone extends LinearOpMode {
         //Need to move forward slightly then left/right to find sky stone first (if not visible)
         //Note: start sideways, facing plate
 
-        robot.MSForTicks(1200); //move sideways to get closer to blocks (right)
+        robot.MSForTicks(1200); //move sideways to get closer to blocks (left)
         //Below is block detecting and getting near block
         //Below, might need to swap x to y, and swap positive/negat ive for -100
         while ( (robot.getY(stoneTarget) < -100 || robot.getY(stoneTarget) > 100) && !isStopRequested() && opModeIsActive()) {
