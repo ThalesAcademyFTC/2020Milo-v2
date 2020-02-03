@@ -354,7 +354,7 @@ public class RedSkystone extends LinearOpMode {
                 robot.MSForTicks(900);
                 robot.skyMove(0.2); //drops skyarm
                 sleep(750);
-                robot.MSForTicks(-1200);
+                robot.MSForTicks(-1000);
                 //robot.turnForTicks(-75);
                 robot.moveFastForTicks(3900);
             } else if (y == 1) {
@@ -364,7 +364,7 @@ public class RedSkystone extends LinearOpMode {
                 robot.MSForTicks(900);
                 robot.skyMove(0.2); //drops skyarm
                 sleep(750);
-                robot.MSForTicks(-1200);
+                robot.MSForTicks(-1000);
                 //robot.turnForTicks(-75);
                 robot.moveFastForTicks(4500);
             }

@@ -340,7 +340,6 @@ public class BlueSkystone extends LinearOpMode {
             if (y == 0) {
                 robot.moveFastForTicks(-2600); //move across line
                 robot.skyMove(0.6); //raises skyarm
-                robot.turnForTicks(125);
                 robot.moveFastForTicks(4150);
                 robot.MSForTicks(1100);
                 robot.skyMove(0.2); //drops skyarm
@@ -356,7 +355,6 @@ public class BlueSkystone extends LinearOpMode {
                 robot.skyMove(0.2); //drops skyarm
                 sleep(750);
                 robot.MSForTicks(-1200);
-                robot.turnForTicks(200);
                 robot.moveFastForTicks(-4500);
             }
         } else {
